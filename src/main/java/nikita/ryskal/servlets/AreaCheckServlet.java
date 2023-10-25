@@ -6,35 +6,32 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import nikita.ryskal.modul.Point;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet("/areaChecker")
 public class AreaCheckServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+//        Enumeration<String> headers  = request.getHeaderNames();
+//        while (headers.hasMoreElements()){
+//            String name = headers.nextElement();
+//            String value = request.getHeader(name);
+//            System.out.println(name+" = "+value);
+//        }
+        HttpSession session = request.getSession(true);
         try {
-            System.out.println(2);
-            System.out.println(request.getParameter("X"));
-            System.out.println(request.getParameter("Y"));
-            System.out.println(request.getParameter("R"));
-
             var x = Float.parseFloat(request.getParameter("X"));
             var y = Float.parseFloat(request.getParameter("Y"));
             var r = Integer.parseInt(request.getParameter("R"));
-
             var point = new Point(x, y, r);
-
-            var session = request.getSession();
-            var bean = (List<Point>) session.getAttribute("bean");
+            var bean = (List<Point>) session.getAttribute("array");
             if (bean == null) {
                 bean = new ArrayList<Point>();
-                session.setAttribute("bean", bean);
+                session.setAttribute("array", bean);
             }
             bean.add(0, point);
             if ("withOutRedirect".equals(request.getParameter("action"))) {
@@ -51,7 +48,7 @@ public class AreaCheckServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher("/result.jsp").forward(request, response);
             }
         } catch (Exception e) {
-            response.sendRedirect("/controller");
+            response.sendRedirect(request.getContextPath() + "/controller");
         }
     }
 }

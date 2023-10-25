@@ -5,9 +5,7 @@ import java.util.Objects;
 public class Point {
     float x;
     float y;
-
     int r;
-
     boolean isHit;
 
     public Point(float x, float y, int r) {
@@ -22,17 +20,14 @@ public class Point {
     }
 
     private boolean checkTriangle() {
-        System.out.println("треугольник");
         return 0 <= x && x <= (float) r / 2 && (float) -r / 2 <= y && y <= 0 && Math.abs(y) + x <= (float) r / 2;
     }
 
     private boolean checkCircle() {
-        System.out.println("круг");
         return x * x + y * y <= r * r && -r <= x && x <= 0 && 0 >= y && y >= -r;
     }
 
     private boolean checkSquare() {
-        System.out.println("прямоугольник");
         return -r <= x && x <= 0 && 0 <= y && y <= r;
     }
 
@@ -51,12 +46,7 @@ public class Point {
 
     @Override
     public String toString() {
-        return "Point{" +
-                "x=" + x +
-                ", y=" + y +
-                ", r=" + r +
-                ", isHit=" + isHit +
-                '}';
+        return "Point{" + "x=" + x + ", y=" + y + ", r=" + r + ", isHit=" + isHit + '}';
     }
 
     public float getX() {

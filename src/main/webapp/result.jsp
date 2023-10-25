@@ -39,7 +39,7 @@
 
             </tr>
             </thead>
-            <% List<Point> list = (List<Point>) request.getSession().getAttribute("bean");
+            <% List<Point> list = (List<Point>) request.getSession().getAttribute("array");
                 if (list != null) {
             %>
             <tbody id="result">
